@@ -33,14 +33,17 @@ export default function GamePage() {
   const currentTotal = calculateHandValue(currentHand, tileValues);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col p-4 md:p-8">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-950 to-slate-950 pointer-events-none"></div>
+    <div className="relative min-h-screen text-white flex flex-col p-4 md:p-8 overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] bg-indigo-600/20 rounded-full mix-blend-screen filter blur-[150px] animate-pulse-glow pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-transparent via-[#030712]/90 to-[#030712] pointer-events-none z-0"></div>
+
       
-      {/* Header info */}
-      <div className="z-10 flex justify-between items-center w-full max-w-4xl mx-auto mb-8 bg-slate-900/50 backdrop-blur-sm p-4 rounded-2xl border border-slate-800">
+      <div className="z-10 flex justify-between items-center w-full max-w-4xl mx-auto mb-8 glass-panel p-4 md:p-5 rounded-2xl animate-fade-in-up">
         <div className="flex flex-col">
-          <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Score</span>
-          <span className="text-2xl font-black text-emerald-400">{score}</span>
+          <span className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Score</span>
+          <span className="text-2xl md:text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">{score}</span>
         </div>
         
         <div className="flex gap-6 text-slate-300 font-medium">
@@ -65,20 +68,22 @@ export default function GamePage() {
       <div className="z-10 flex flex-col items-center flex-1 max-w-4xl mx-auto w-full">
         <Hand tiles={currentHand} tileValues={tileValues} totalValue={currentTotal} />
         
-        <div className="mt-12 flex flex-col sm:flex-row gap-6 w-full max-w-md">
+        <div className="mt-12 flex flex-col sm:flex-row gap-4 w-full max-w-md px-4">
           <Button 
             onClick={() => placeBet('higher')}
-            className="flex-1 py-6 text-xl bg-gradient-to-br from-indigo-600 to-indigo-800 hover:from-indigo-500 hover:to-indigo-700 border-none shadow-xl shadow-indigo-900/50 flex flex-col items-center gap-2 text-white"
+            className="group relative flex-1 py-5 text-base bg-gradient-to-br from-indigo-600 to-purple-700 hover:from-indigo-500 hover:to-purple-600 border-none rounded-2xl shadow-[0_0_25px_rgba(79,70,229,0.25)] hover:shadow-[0_0_40px_rgba(79,70,229,0.4)] transition-all duration-300 hover:-translate-y-1 flex flex-col items-center gap-2 text-white overflow-hidden"
           >
-            <ArrowUpCircle size={32} />
-            <span>Higher</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <ArrowUpCircle size={28} className="group-hover:scale-110 transition-transform duration-300 drop-shadow-sm" />
+            <span className="font-bold tracking-wide">Higher</span>
           </Button>
           <Button 
             onClick={() => placeBet('lower')}
-            className="flex-1 py-6 text-xl bg-gradient-to-br from-pink-600 to-pink-800 hover:from-pink-500 hover:to-pink-700 border-none shadow-xl shadow-pink-900/50 flex flex-col items-center gap-2 text-white"
+            className="group relative flex-1 py-5 text-base bg-gradient-to-br from-pink-600 to-rose-700 hover:from-pink-500 hover:to-rose-600 border-none rounded-2xl shadow-[0_0_25px_rgba(219,39,119,0.25)] hover:shadow-[0_0_40px_rgba(219,39,119,0.4)] transition-all duration-300 hover:-translate-y-1 flex flex-col items-center gap-2 text-white overflow-hidden"
           >
-            <ArrowDownCircle size={32} />
-            <span>Lower</span>
+            <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <ArrowDownCircle size={28} className="group-hover:scale-110 transition-transform duration-300 drop-shadow-sm" />
+            <span className="font-bold tracking-wide">Lower</span>
           </Button>
         </div>
 

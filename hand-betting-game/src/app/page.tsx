@@ -20,7 +20,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     // Fetch leaderboard
-    axios.get('http://localhost:5000/api/leaderboard')
+    axios.get('/api/leaderboard')
       .then(res => setLeaderboard(res.data))
       .catch(err => {
         console.error('Failed to fetch leaderboard:', err);
@@ -39,43 +39,53 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-950 to-slate-950 pointer-events-none"></div>
+    <div className="relative min-h-screen text-white flex flex-col items-center justify-center p-4 overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-pulse-glow"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-purple-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#030712]/80 to-[#030712] pointer-events-none"></div>
       
-      <div className="z-10 text-center mb-12">
-        <h1 className="text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-lg">
-          Mahjong <br/> Hand Betting
+      <div className="z-10 text-center mb-10 animate-fade-in-up px-4">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-br from-indigo-300 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(168,85,247,0.3)] tracking-tight leading-tight">
+          Mahjong <br className="md:hidden" /> Hand Betting
         </h1>
-        <p className="text-slate-400 text-lg max-w-md mx-auto">
-          Bet on the value of the next hand. Higher or lower? Will the tiles reach 10 or 0? 
+        <p className="text-slate-300 text-sm md:text-base max-w-md mx-auto font-medium tracking-wide">
+          Bet on the value of the next hand. <br className="hidden md:block" /> Higher or lower? Will the tiles reach 10 or 0? 
         </p>
       </div>
 
-      <div className="z-10 bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl border border-slate-800 shadow-2xl w-full max-w-md">
+      <div className="z-10 glass-panel p-6 md:p-8 rounded-3xl w-full max-w-md animate-fade-in-up mx-4" style={{ animationDelay: '0.1s' }}>
         <Button 
           onClick={handleNewGame} 
-          className="w-full text-xl py-4 flex items-center justify-center gap-2 mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 border-none text-white shadow-xl shadow-indigo-900/20"
+          className="group relative w-full text-base py-4 flex items-center justify-center gap-2 mb-8 bg-white text-slate-900 hover:bg-slate-100 border-none rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all duration-300 hover:scale-[1.02] overflow-hidden"
         >
-          <Play fill="currentColor" /> Start New Game
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <Play size={18} className="fill-slate-900 group-hover:scale-110 transition-transform duration-300" /> 
+          <span className="font-bold tracking-wide">Start New Game</span>
         </Button>
 
         <div>
-          <h2 className="text-xl font-bold flex items-center gap-2 mb-4 text-slate-300">
-            <Trophy className="text-yellow-500" /> Leaderboard
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold flex items-center gap-2 text-white tracking-wide">
+              <Trophy className="text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]" size={20} /> 
+              Leaderboard
+            </h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-slate-700 to-transparent ml-4"></div>
+          </div>
+          
           <div className="space-y-3">
             {leaderboard.length === 0 ? (
-              <div className="text-slate-500 text-center py-4">No scores yet!</div>
+              <div className="text-slate-400 text-center py-6 glass-panel rounded-2xl">No scores yet!</div>
             ) : (
               leaderboard.map((entry, idx) => (
-                <div key={entry._id} className="flex items-center justify-between bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
+                <div key={entry._id} className="group flex items-center justify-between bg-slate-800/40 hover:bg-slate-800/80 p-4 rounded-2xl border border-slate-700/50 transition-all duration-300 hover:border-slate-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.1)]">
                   <div className="flex items-center gap-3">
-                    <span className={`w-6 text-center font-bold ${idx === 0 ? 'text-yellow-500' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-amber-700' : 'text-slate-500'}`}>
-                      #{idx + 1}
+                    <span className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold ${idx === 0 ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 shadow-[0_0_15px_rgba(250,204,21,0.3)]' : idx === 1 ? 'bg-slate-300/20 text-slate-300 border border-slate-300/50' : idx === 2 ? 'bg-amber-700/20 text-amber-500 border border-amber-700/50' : 'bg-slate-800 text-slate-500'}`}>
+                      {idx + 1}
                     </span>
-                    <span className="font-medium">{entry.name}</span>
+                    <span className="font-medium text-slate-200 text-base group-hover:text-white transition-colors">{entry.name}</span>
                   </div>
-                  <span className="font-bold text-indigo-400">{entry.score} pts</span>
+                  <span className="font-bold text-indigo-400 text-base tracking-wide">{entry.score} pts</span>
                 </div>
               ))
             )}

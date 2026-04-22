@@ -1,0 +1,6 @@
+node_modules/
+.env
+.next/
+server/node_modules/
+hand-betting-game/node_modules/
+hand-betting-game/.next/
